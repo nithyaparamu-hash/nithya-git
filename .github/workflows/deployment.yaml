@@ -16,8 +16,8 @@ jobs:
         id: set-matrix
         run: |
           # Convert JSON array to matrix string
-          MATRIX=$(cat manifest.json | jq -c '.')
-          echo "::set-output name=matrix::$MATRIX"
+          services=$(jq -c '.' manifest.json)
+          echo "services=$services" >> $GITHUB_OUTPUT
 
   deploy:
     needs: generate-matrix
