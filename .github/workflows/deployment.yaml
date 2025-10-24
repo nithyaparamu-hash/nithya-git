@@ -31,7 +31,7 @@ jobs:
 
       - name: Print Service Details
         run: |
-          echo "Service: ${{ services.service.service }}"
-          echo "Repo: ${{ services.service.rep }}"
-          echo "Artifact: ${{ services.service.artifact }}"
-          echo "Jar Name: ${{ services.service.jarname }}"
+          echo "Service: ${{ matrix.services.service }}"
+          echo "Repo: ${{ matrix.services.repo }}"
+          echo "Artifact: ${{ matrix.services.artifact }}"
+          echo "Jar Name: ${{ matrix.services.jarname }}"
