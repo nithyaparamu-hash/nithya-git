@@ -16,6 +16,7 @@ jobs:
         id: set-matrix
         run: |
           # Convert JSON array to matrix string
+          cd configs
           services=$(jq -c '.' manifest.json)
           echo "services=$services" >> $GITHUB_OUTPUT
 
