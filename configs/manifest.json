@@ -1,4 +1,5 @@
-  {
+[
+{
     "service": "orderservice",
     "rep": "dkr-public-local/com/ah/gec/orderservice",
     "artifact": "orderservice-3.0.0.jar",
@@ -16,3 +17,4 @@
     "artifact": "paymentservice-2.1.0.jar",
     "jarname": "paymentservice-2.1.0.jar"
   }
+]
