@@ -24,7 +24,7 @@ jobs:
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: service:${{fromJSON(needs.generate-matrix.outputs.services)}}
+      matrix: service: ${{fromJSON(needs.generate-matrix.outputs.services)}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
