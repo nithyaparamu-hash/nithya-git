@@ -1,21 +1,20 @@
 name: Deploy Services
 
 on:
-  workflow_dispatch: # manual trigger
+  workflow_dispatch:
 
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.services }}
+      services: ${{ steps.set-matrix.outputs.services }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Read JSON and set matrix
         id: set-matrix
         run: |
-          # Convert JSON array to matrix string
           cd configs
           services=$(jq -c '.' manifest.json)
           echo "services=$services" >> $GITHUB_OUTPUT
@@ -24,14 +23,15 @@ jobs:
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: service: ${{fromJSON(needs.generate-matrix.outputs.services)}}
+      matrix:
+        service: ${{ fromJSON(needs.generate-matrix.outputs.services) }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Print Service Details
         run: |
-          echo "Service: ${{ matrix.services.service }}"
-          echo "Repo: ${{ matrix.services.repo }}"
-          echo "Artifact: ${{ matrix.services.artifact }}"
-          echo "Jar Name: ${{ matrix.services.jarname }}"
+          echo "Service: ${{ matrix.service.service }}"
+          echo "Repo: ${{ matrix.service.repo }}"
+          echo "Artifact: ${{ matrix.service.artifact }}"
+          echo "Jar Name: ${{ matrix.service.jarname }}"
