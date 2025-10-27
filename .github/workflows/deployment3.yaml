@@ -18,9 +18,4 @@ jobs:
           cd configs
           matrix=$(jq -c '[ to_entries[] | { service: .key, rep: .value.rep, artifact: .value.artifact, jarname: .value.jarname } ]' manifest1.json)
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
-
-  deploy:
-    needs: generate-matrix
-    runs-on: ubuntu-latest
-    steps:
-      -name: run echo "${{ fromJSON(needs.generate-matrix.outputs.matrix }}"
+          echo "$matrix"
