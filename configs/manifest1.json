@@ -1,0 +1,21 @@
+[
+ {
+    "service1-orderservice": {
+    "rep": "dkr-public-local/com/ah/gec/orderservice",
+    "artifact": "orderservice-3.0.0.jar",
+    "jarname": "orderservice-3.0.0.jar"
+  },
+  {
+    "service2-customerservice": {
+    "rep": "dkr-public-local/com/ah/gec/customerservice",
+    "artifact": "customerservice-1.5.2.jar",
+    "jarname": "customerservice-1.5.2.jar"
+  },
+  {
+    "service3-paymentservice": {
+    "rep": "dkr-public-local/com/ah/gec/paymentservice",
+    "artifact": "paymentservice-2.1.0.jar",
+    "jarname": "paymentservice-2.1.0.jar"
+  }
+ }  
+]
