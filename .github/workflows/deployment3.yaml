@@ -16,7 +16,7 @@ jobs:
         id: set-matrix
         run: |
           cd configs
-          matrix=$(jq -c '[ to_entries[] | { service: .key, name: .value.name, version: .value.version, env: .value.env } ]' manifest1.json)
+          matrix=$(jq -c '[ to_entries[] | { service: .key, rep: .value.rep, artifact: .value.artifact, jarname: .value.jarname } ]' manifest1.json)
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
   deploy:
