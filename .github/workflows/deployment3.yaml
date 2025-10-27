@@ -7,7 +7,7 @@ jobs:
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
-      services: ${{ steps.set-matrix.outputs.services }}
+      services: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,22 +16,22 @@ jobs:
         id: set-matrix
         run: |
           cd configs
-          services=$(jq -c '[ to_entries[] | { service: .key, name: .value.name, version: .value.version, env: .value.env } ]' manifest1.json)
-          echo "services=$services" >> $GITHUB_OUTPUT
+          matrix=$(jq -c '[ to_entries[] | { service: .key, name: .value.name, version: .value.version, env: .value.env } ]' manifest1.json)
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
   deploy:
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: ${{ fromJSON(needs.generate-matrix.outputs.services) }}
+        service: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Print Service Details
         run: |
-          echo "Service: ${{ matrix.service.service }}"
-          echo "Repo: ${{ matrix.service.rep }}"
-          echo "Artifact: ${{ matrix.service.artifact }}"
-          echo "Jar Name: ${{ matrix.service.jarname }}"
+          echo "Service: ${{ matrix.service }}"
+          echo "Repo: ${{ matrix.rep }}"
+          echo "Artifact: ${{ matrix.artifact }}"
+          echo "Jar Name: ${{ matrix.jarname }}"
