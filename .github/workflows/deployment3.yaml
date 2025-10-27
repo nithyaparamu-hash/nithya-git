@@ -23,14 +23,15 @@ jobs:
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+      matrix:
+        service: ${{ fromJSON(needs.generate-matrix.outputs.services) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Print Service Details
         run: |
-          echo "Service: ${{ matrix.service }}"
-          echo "Repo: ${{ matrix.rep }}"
-          echo "Artifact: ${{ matrix.artifact }}"
-          echo "Jar Name: ${{ matrix.jarname }}"
+          echo "Service: ${{ matrix.service.service }}"
+          echo "Repo: ${{ matrix.service.rep }}"
+          echo "Artifact: ${{ matrix.service.artifact }}"
+          echo "Jar Name: ${{ matrix.service.jarname }}"
