@@ -1,4 +1,4 @@
-name: Deploy matrix Services
+name: Deploy matrix2 Services
 
 on:
   workflow_dispatch:
