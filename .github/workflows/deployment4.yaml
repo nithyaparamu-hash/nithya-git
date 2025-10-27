@@ -16,7 +16,7 @@ jobs:
         id: set-matrix
         run: |
           cd configs
-          filename=$(jq -c '[ to_entries[] | { service: .key, rep: .value.rep, artifact: .value.artifact, jarname: .value.jarname } ]' manifest1.json)
+          filename=$(jq -c '[ to_entries[] | { service: .[0], rep: .[1], artifact: .[2], jarname: .[3] } ]' manifest1.json)
           echo "filename=$filename" >> $GITHUB_OUTPUT
           echo "$filename"
 
