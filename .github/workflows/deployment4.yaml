@@ -1,0 +1,38 @@
+name: Deploy matrix2 Services
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      filename: ${{ steps.set-matrix.outputs.filename }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Read JSON and set matrix
+        id: set-matrix
+        run: |
+          cd configs
+          filename=$(jq -c '[ to_entries[] | { service: .key, rep: .value.rep, artifact: .value.artifact, jarname: .value.jarname } ]' manifest1.json)
+          echo "filename=$filename" >> $GITHUB_OUTPUT
+          echo "$filename"
+
+  deploy:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{ fromJSON(needs.generate-matrix.outputs.filename) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print Service Details
+        run: |
+          echo "Service: ${{ matrix.service }}"
+          echo "Repo: ${{ matrix.rep }}"
+          echo "Artifact: ${{ matrix.artifact }}"
+          echo "Jar Name: ${{ matrix.jarname }}"
