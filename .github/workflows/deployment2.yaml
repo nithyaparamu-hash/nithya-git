@@ -16,7 +16,7 @@ jobs:
         id: set-matrix
         run: |
           cd configs
-          services=$(jq -c '.' manifest1.json)
+          services=$(jq -c '[.[]' manifest1.json)
           echo "services=$services" >> $GITHUB_OUTPUT
 
   deploy:
